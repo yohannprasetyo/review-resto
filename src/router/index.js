@@ -15,6 +15,11 @@ const router = createRouter({
       name: "restos",
       component: () => import("../views/RestoView.vue"),
     },
+    {
+      path: "/restos/:id",
+      name: "restos-show",
+      component: () => import("../views/RestoDetailView.vue"),
+    },
   ],
 });
 
