@@ -1,4 +1,3 @@
-
 <script setup>
 import { defineProps } from "vue";
 import { RouterLink } from "vue-router";
@@ -16,18 +15,18 @@ defineProps({
   <RouterLink
     v-if="to"
     :to="to"
-    class="block bg-white shadow p-4 rounded select-none"
+    class="block bg-orange shadow-sm shadow-[#f76002] p-4 rounded select-none"
   >
     <BaseCardTitle v-if="!!$slots.title">
       <slot name="title" />
     </BaseCardTitle>
 
-    <BaseCardBody>
+    <BaseCardBody class="">
       <slot />
     </BaseCardBody>
   </RouterLink>
 
-  <div v-else class="block bg-white shadow p-4 rounded select-none">
+  <div v-else class="block bg-orange shadow-sm shadow-[#f76002] p-4 rounded select-none">
     <BaseCardTitle v-if="!!$slots.title">
       <slot name="title" />
     </BaseCardTitle>

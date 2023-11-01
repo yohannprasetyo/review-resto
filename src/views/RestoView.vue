@@ -1,10 +1,16 @@
 <script setup>
 import { useRestoRepository } from "@/composables";
+import { useAuthRepository } from '../composables/useAuthRepository';
 import { ref, onMounted } from "vue";
 import BaseCard from "../components/BaseCard.vue";
+import Navbar from "../components/NavBar.vue";
 import BaseContainer from "../components/BaseContainer.vue";
+import Loading from '../components/Loading.vue';
+
 
 const repository = useRestoRepository();
+const repository_auth = useAuthRepository();
+
 const isLoading = ref(true);
 const restos = ref([]);
 const fetchRestos = async () => {
@@ -16,7 +22,7 @@ const fetchRestos = async () => {
     console.error(e);
   }
   isLoading.value = false;
-};
+}
 onMounted(() => fetchRestos());
 const excerpt = (text, maxLenght = 10, indicator = "...") => {
   let textCopy = text;
@@ -24,18 +30,33 @@ const excerpt = (text, maxLenght = 10, indicator = "...") => {
     textCopy = textCopy.substring(0, maxLenght) + indicator;
   }
   return textCopy;
-};
+}
+
 </script>
 
 <template>
+  <Loading v-if="isLoading"/>
+  <Navbar/>
+  <hr class="border-1 border-[#f46002] shadow-sm shadow-[#f46002]">
   <BaseContainer>
     <div class="grid grid-cols-12 gap-4">
       <div v-for="resto in restos" :key="resto.id" class="col-span-4">
+        <!-- Card -->
         <BaseCard :to="{ name: 'restos-show', params: { id: resto.id } }">
-          <template #title>{{ resto.name }}</template>
+          <template #title class="">{{ resto.name }}</template>
           {{ excerpt(resto.description, 40) }}
         </BaseCard>
       </div>
     </div>
   </BaseContainer>
 </template>
+<script>
+import { ref } from 'vue';
+export default {
+  setup() {
+    let showMenu = ref(false);
+    const toggleNav = () => (showMenu.value = !showMenu.value);
+    return { showMenu, toggleNav };
+  },
+};
+</script>
